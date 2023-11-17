@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Pegawai;
+use App\Models\Pegawai;
 use PhpParser\Node\Expr\Cast\String_;
 
 class PegawaiController extends Controller
@@ -39,15 +39,19 @@ class PegawaiController extends Controller
             "phone" => "required",
             "alamat" => "required",
             "email" => "required",
+            "status" => "required",
+            "hired_on" => "required",
         ]);
 
         //data yang akan ditambahkan 
         $input = [
-            'name' => $request->nama,
+            'name' => $request->name,
             'gender' => $request->gender,
             'phone' => $request->phone,
             'alamat' => $request->alamat,
             'email' => $request->email,
+            'status' => $request->status,
+            'hired_on' => $request->hired_on,
         ];
 
          // menggunakan eloquent create() untuk menambah data pegawai baru
@@ -80,11 +84,13 @@ class PegawaiController extends Controller
 
          // menggunakan eloquent update() untuk mengubah data pegawai dan menampilkan kembali menggunakan eloquent all()
          $pegawai->update([
-            "name" => $request->nama ?? $pegawai->nama,
+            "name" => $request->name ?? $pegawai->nama,
             "gender" => $request->gender  ?? $pegawai->gender,
             "phone" => $request->phone ?? $pegawai->phone,
             "alamat" => $request->alamat ?? $pegawai->alamat,
             "email" => $request->email ?? $pegawai->email,
+            "status" => $request->status ?? $pegawai->status,
+            "hired_on" => $request->hired_on ?? $pegawai->hired_on,
         ]);
         //membuat data response
         $data = [
@@ -97,7 +103,7 @@ class PegawaiController extends Controller
     }
 
     //method atau funcition untuk menghapus data pegawai
-    public function delete($id)
+    public function destroy($id)
     {
         //menggunakan eloquent find() untuk mencari data pegawai berdasarkan id
         $pegawai = Pegawai::find($id);
@@ -197,7 +203,7 @@ class PegawaiController extends Controller
 
     public function Inactive()
     {
-        $pegawai = Pegawai::whre('status', 'inactive')->get();
+        $pegawai = Pegawai::where('status', 'inactive')->get();
 
         //jika data pegawai yang inactive tidak ditemukan maka kirim kode 404
         if (!$pegawai) {

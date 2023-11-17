@@ -10,5 +10,5 @@ class Pegawai extends Model
     use HasFactory;
 
     // Mendefinisikan nama attributes table yang digunakan
-    protected $fillable = ["id", "name", "gender","phone", "alamat", "status", "hired_On"];
+    protected $fillable = ["name", "gender","phone", "email", "alamat", "status", "hired_on"];
 }
